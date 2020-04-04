@@ -1,0 +1,84 @@
+﻿@model IEnumerable<NewBlogProject.Models.Post>
+
+@{
+    ViewBag.Title = "Home";
+}
+
+
+<h2>Home</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreatePost")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.content)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Published)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UpdatedAt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Categories)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Author)
+        </th>
+
+        <th></th>
+    </tr>
+     
+
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.title)
+    </td>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.content)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Published)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.UpdatedAt)
+    </td>
+    <td>
+        @foreach (var cat in item.Categories)
+        {
+
+            @cat.CName
+
+        }
+
+    </td>
+    <td style="color:#4cff00">
+        @Html.DisplayFor(modelItem => item.Author.Name)
+    </td>
+
+    <td>
+        @if (User.Identity.IsAuthenticated && User.Identity.Name == item.Author.Name)
+        {
+
+            @Html.ActionLink("Edit", "Edit", new { id = item.Pid });
+
+            @Html.ActionLink("Details", "Details", new { id = item.Pid });
+            @Html.ActionLink("Delete", "Delete", new { id = item.Pid });
+
+        }
+
+
+    </td>
+</tr>
+    }
+
+</table>
